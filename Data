@@ -1,0 +1,25 @@
+- Download the file https://storage.yandexcloud.net/cloud-certs/CA.pem to the folder containing the .ipynb file which you're going to use to work with the data base
+- Create a data base connection by copying the code below:
+
+# import libraries
+import pandas as pd
+from sqlalchemy import create_engine
+
+db_config = {'user': 'praktikum_student',         # user name
+             'pwd': 'Sdf4$2;d-d30pp', # password
+             'host': 'rc1b-wcoijxj3yxfsf3fs.mdb.yandexcloud.net',
+             'port': 6432,              # connection port
+             'db': 'data-analyst-final-project-db'}          # the name of the data base
+
+connection_string = 'postgresql://{}:{}@{}:{}/{}'.format(db_config['user'],
+                                                                     db_config['pwd'],
+                                                                       db_config['host'],
+                                                                       db_config['port'],
+                                                                       db_config['db'])
+
+engine = create_engine(connection_string, connect_args={'sslmode':'require'})
+
+The connection is stored in the engine variable. You can run an SQL query using pandas:
+
+
+pd.io.sql.read_sql(query, con = engine)
